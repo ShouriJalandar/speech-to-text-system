@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
-const BACKEND_URL = "http://localhost:8000/api/transcribe";
+const BACKEND_URL = "https://YOUR_BACKEND_URL/api/transcribe";
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
-  // generate unique user id
+  // generate random user id
   const userIdRef = useRef("user_" + Math.floor(Math.random() * 10000));
 
   const toggleRecording = async () => {
@@ -34,7 +34,6 @@ function App() {
         const mediaRecorder = new MediaRecorder(stream);
 
         mediaRecorderRef.current = mediaRecorder;
-
         chunksRef.current = [];
 
         mediaRecorder.ondataavailable = (event) => {
@@ -46,7 +45,6 @@ function App() {
           const blob = new Blob(chunksRef.current, { type: "audio/webm" });
 
           const formData = new FormData();
-
           formData.append("audio", blob, "speech.webm");
           formData.append("user_id", userIdRef.current);
 
@@ -83,7 +81,7 @@ function App() {
 
   return (
 
-    <div style={{textAlign:"center",marginTop:"150px",fontFamily:"Arial"}}>
+    <div style={{ textAlign:"center", marginTop:"150px", fontFamily:"Arial" }}>
 
       <h1>Speech Recorder</h1>
 
